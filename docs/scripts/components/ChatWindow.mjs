@@ -30,17 +30,22 @@ class ChatWindow extends HTMLElement {
 
   setupEventListeners() {
     const messageInput = this.shadowRoot.querySelector('message-input');
-    messageInput.addEventListener('message-sent', (e) => {
+    messageInput.addEventListener('message-sent', async (e) => {
       const messageList = this.shadowRoot.querySelector('message-list');
-      messageList.addMessage(e.detail.message, 'user');
-      // Here you would typically send the message to the LLM and wait for a response
-      // For now, we'll just simulate a response after a short delay
-      setTimeout(() => {
+      const userMessage = e.detail.message;
+      messageList.addMessage(userMessage, 'user');
+
+      // Send the message to Ollama and wait for a response
+      try {
+        const response = await window.chatWithOllama(userMessage);
+        messageList.addMessage(response, 'llm');
+      } catch (error) {
+        console.error('Error getting response from Ollama:', error);
         messageList.addMessage(
-          'This is a simulated response from the LLM.',
+          'Sorry, there was an error communicating with the LLM.',
           'llm'
         );
-      }, 1000);
+      }
     });
   }
 }

@@ -14,6 +14,8 @@ class MessageInput extends HTMLElement {
             <style>
                 :host {
                     display: block;
+                    padding: 20px;
+                    border-top: 1px solid #e0e0e0;
                 }
                 form {
                     display: flex;

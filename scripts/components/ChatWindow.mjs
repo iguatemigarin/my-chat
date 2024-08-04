@@ -16,6 +16,12 @@ class ChatWindow extends HTMLElement {
                     display: flex;
                     flex-direction: column;
                     height: 100%;
+                    width: 100%;
+                    max-width: 600px;
+                    height: 80vh;
+                    background-color: white;
+                    border-radius: 10px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                 }
             </style>
             <message-list></message-list>

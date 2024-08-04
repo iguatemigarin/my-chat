@@ -15,6 +15,8 @@ class MessageList extends HTMLElement {
                     display: block;
                     height: 100%;
                     overflow-y: auto;
+                    flex-grow: 1;
+                    padding: 20px;
                 }
                 .message {
                     margin-bottom: 10px;

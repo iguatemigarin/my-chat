@@ -5,6 +5,7 @@ class ChatWindow extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.currentLLMMessageId = null;
+    this.context = '';
   }
 
   connectedCallback() {
@@ -26,6 +27,7 @@ class ChatWindow extends HTMLElement {
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
       </style>
+      <context-box></context-box>
       <message-list></message-list>
       <message-input></message-input>
     `;
@@ -51,10 +53,14 @@ class ChatWindow extends HTMLElement {
     messageList.addMessage(userMessage, 'user');
 
     // Initialize LLM response
-    this.currentLLMMessageId = messageList.addMessage('', 'llm');
+    this.currentLLMMessageId = messageList.addMessage('...', 'llm');
 
     try {
-      await chatWithOllama(userMessage);
+      const newContext = await chatWithOllama({
+        prompt: userMessage,
+        context: this.context,
+      });
+      this.updateContext(newContext);
       // The full response will be updated through partial response events
     } catch (error) {
       console.error('Error getting response from Ollama:', error);
@@ -76,6 +82,12 @@ class ChatWindow extends HTMLElement {
         'llm'
       );
     }
+  }
+
+  updateContext(context) {
+    this.context = context;
+    const contextBox = this.shadowRoot.querySelector('context-box');
+    contextBox.textContent = context;
   }
 }
 

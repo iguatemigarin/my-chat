@@ -39,8 +39,10 @@ async function chatWithOllama(prompt) {
         const parsedLine = JSON.parse(line);
         if (parsedLine.response) {
           fullResponse += parsedLine.response;
-          // You can emit an event or update the UI here with the partial response
-          // For example: document.dispatchEvent(new CustomEvent('partialResponse', { detail: fullResponse }));
+          // Emit an event with the partial response
+          document.dispatchEvent(
+            new CustomEvent('partialResponse', { detail: fullResponse })
+          );
         }
       }
     }

@@ -2,6 +2,7 @@ class MessageList extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this.messageElements = new Map();
   }
 
   connectedCallback() {
@@ -43,7 +44,21 @@ class MessageList extends HTMLElement {
     this.shadowRoot
       .querySelector('#message-container')
       .appendChild(messageElement);
+
+    const messageId = Date.now().toString();
+    this.messageElements.set(messageId, messageElement);
+
     this.scrollToBottom();
+    return messageId;
+  }
+
+  updateMessage(messageId, text, sender) {
+    const messageElement = this.messageElements.get(messageId);
+    if (messageElement) {
+      messageElement.textContent = text;
+      messageElement.className = `message ${sender}`;
+      this.scrollToBottom();
+    }
   }
 
   scrollToBottom() {

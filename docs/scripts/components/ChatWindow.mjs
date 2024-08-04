@@ -11,21 +11,21 @@ class ChatWindow extends HTMLElement {
 
   render() {
     this.shadowRoot.innerHTML = `
-            <style>
-                :host {
-                    display: flex;
-                    flex-direction: column;
-                    width: 100%;
-                    max-width: 600px;
-                    height: 80vh;
-                    background-color: white;
-                    border-radius: 10px;
-                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                }
-            </style>
-            <message-list></message-list>
-            <message-input></message-input>
-        `;
+      <style>
+        :host {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          max-width: 600px;
+          height: 80vh;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+      </style>
+      <message-list></message-list>
+      <message-input></message-input>
+    `;
   }
 
   setupEventListeners() {
@@ -38,7 +38,7 @@ class ChatWindow extends HTMLElement {
       setTimeout(() => {
         messageList.addMessage(
           'This is a simulated response from the LLM.',
-          'llm',
+          'llm'
         );
       }, 1000);
     });

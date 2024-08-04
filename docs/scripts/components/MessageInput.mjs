@@ -11,38 +11,38 @@ class MessageInput extends HTMLElement {
 
   render() {
     this.shadowRoot.innerHTML = `
-            <style>
-                :host {
-                    display: block;
-                    padding: 20px;
-                    border-top: 1px solid #e0e0e0;
-                }
-                form {
-                    display: flex;
-                }
-                input {
-                    flex-grow: 1;
-                    padding: 10px;
-                    font-size: 16px;
-                    border: 1px solid #ccc;
-                    border-radius: 5px;
-                }
-                button {
-                    padding: 10px 20px;
-                    font-size: 16px;
-                    background-color: #4CAF50;
-                    color: white;
-                    border: none;
-                    border-radius: 5px;
-                    margin-left: 10px;
-                    cursor: pointer;
-                }
-            </style>
-            <form>
-                <input type="text" placeholder="Type your message...">
-                <button type="submit">Send</button>
-            </form>
-        `;
+      <style>
+        :host {
+          display: block;
+          padding: 20px;
+          border-top: 1px solid #e0e0e0;
+        }
+        form {
+          display: flex;
+        }
+        input {
+          flex-grow: 1;
+          padding: 10px;
+          font-size: 16px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+        button {
+          padding: 10px 20px;
+          font-size: 16px;
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          margin-left: 10px;
+          cursor: pointer;
+        }
+      </style>
+      <form>
+        <input type="text" placeholder="Type your message...">
+        <button type="submit">Send</button>
+      </form>
+    `;
   }
 
   setupEventListeners() {

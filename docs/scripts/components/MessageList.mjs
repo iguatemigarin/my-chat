@@ -10,30 +10,30 @@ class MessageList extends HTMLElement {
 
   render() {
     this.shadowRoot.innerHTML = `
-            <style>
-                :host {
-                    display: block;
-                    height: 100%;
-                    overflow-y: auto;
-                    flex-grow: 1;
-                    padding: 20px;
-                }
-                .message {
-                    margin-bottom: 10px;
-                    padding: 10px;
-                    border-radius: 5px;
-                }
-                .user {
-                    background-color: #e1f5fe;
-                    align-self: flex-end;
-                }
-                .llm {
-                    background-color: #f0f0f0;
-                    align-self: flex-start;
-                }
-            </style>
-            <div id="message-container"></div>
-        `;
+      <style>
+        :host {
+          display: block;
+          height: 100%;
+          overflow-y: auto;
+          flex-grow: 1;
+          padding: 20px;
+        }
+        .message {
+          margin-bottom: 10px;
+          padding: 10px;
+          border-radius: 5px;
+        }
+        .user {
+          background-color: #e1f5fe;
+          align-self: flex-end;
+        }
+        .llm {
+          background-color: #f0f0f0;
+          align-self: flex-start;
+        }
+      </style>
+      <div id="message-container"></div>
+    `;
   }
 
   addMessage(text, sender) {

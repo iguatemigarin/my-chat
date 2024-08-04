@@ -16,6 +16,7 @@ export async function chatWithOllama({ prompt, context }) {
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
     let fullResponse = '';
+    let latestLine;
 
     // eslint-disable-next-line no-constant-condition
     while (true) {
@@ -28,6 +29,7 @@ export async function chatWithOllama({ prompt, context }) {
       for (const line of lines) {
         if (line.trim() === '') continue;
         const parsedLine = JSON.parse(line);
+        latestLine = parsedLine;
         if (parsedLine.response) {
           fullResponse += parsedLine.response;
           // Emit an event with the partial response
@@ -39,21 +41,31 @@ export async function chatWithOllama({ prompt, context }) {
     }
 
     const newContextResponse = await generate({
-      prompt: `<user>${prompt}</user><assistant>${fullResponse}</assistant>`,
+      // prompt: `<user>${prompt}</user><assistant>${fullResponse}</assistant>`,
+      prompt: 'output',
       system:
         'You are a helpful assistant. Your only job is to generate a context of the conversation. Generate this context based on the user input and your response. Keep the important points of the conversation.',
       stream: false,
-      context,
+      context: latestLine.context,
     });
 
-    return (await newContextResponse.json()).response;
+    return {
+      summary: (await newContextResponse.json()).response,
+      context: latestLine.context,
+    };
   } catch (error) {
     console.error('Error chatting with Ollama:', error);
     return 'Sorry, there was an error communicating with Ollama.';
   }
 }
 
-function generate({ prompt, system, stream = true, options = {} }) {
+function generate({
+  prompt,
+  system,
+  stream = true,
+  options = {},
+  context = [],
+}) {
   return fetch(OLLAMA_API_URL, {
     method: 'POST',
     headers: {
@@ -65,6 +77,7 @@ function generate({ prompt, system, stream = true, options = {} }) {
       stream,
       system,
       options,
+      context,
     }),
   });
 }

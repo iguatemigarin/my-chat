@@ -8,6 +8,10 @@ class ContextBox extends HTMLElement {
     this.render();
   }
 
+  setContent(content) {
+    this.shadowRoot.querySelector('slot').textContent = content;
+  }
+
   render() {
     this.shadowRoot.innerHTML = `
       <style>
@@ -27,5 +31,3 @@ class ContextBox extends HTMLElement {
 }
 
 customElements.define('context-box', ContextBox);
-
-export default ContextBox;

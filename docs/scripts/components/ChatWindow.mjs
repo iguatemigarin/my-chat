@@ -1,3 +1,4 @@
+import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js';
 import { chatWithOllama } from '../ollamaChat.mjs';
 
 class ChatWindow extends HTMLElement {
@@ -5,7 +6,10 @@ class ChatWindow extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.currentLLMMessageId = null;
-    this.context = '';
+    this.state = {
+      context: [],
+      summary: '',
+    };
   }
 
   connectedCallback() {
@@ -56,11 +60,11 @@ class ChatWindow extends HTMLElement {
     this.currentLLMMessageId = messageList.addMessage('...', 'llm');
 
     try {
-      const newContext = await chatWithOllama({
+      const newState = await chatWithOllama({
         prompt: userMessage,
-        context: this.context,
+        context: this.state.context,
       });
-      this.updateContext(newContext);
+      this.updateState(newState);
       // The full response will be updated through partial response events
     } catch (error) {
       console.error('Error getting response from Ollama:', error);
@@ -75,19 +79,29 @@ class ChatWindow extends HTMLElement {
   handlePartialResponse(e) {
     const messageList = this.shadowRoot.querySelector('message-list');
     const partialResponse = e.detail;
+
     if (this.currentLLMMessageId) {
       messageList.updateMessage(
         this.currentLLMMessageId,
-        partialResponse,
+        this.formatResponse(partialResponse),
         'llm'
       );
     }
   }
 
-  updateContext(context) {
-    this.context = context;
+  formatResponse(response) {
+    return marked(response);
+  }
+
+  updateState(newState) {
+    this.state = newState;
+    this.updateSummary();
+  }
+
+  updateSummary() {
+    const { summary } = this.state;
     const contextBox = this.shadowRoot.querySelector('context-box');
-    contextBox.textContent = context;
+    contextBox.setContent(summary);
   }
 }
 

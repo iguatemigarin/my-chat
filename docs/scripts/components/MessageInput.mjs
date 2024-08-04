@@ -7,6 +7,8 @@ class MessageInput extends HTMLElement {
   connectedCallback() {
     this.render();
     this.setupEventListeners();
+    this.focus();
+    this.debug();
   }
 
   render() {
@@ -63,6 +65,18 @@ class MessageInput extends HTMLElement {
         input.value = '';
       }
     });
+  }
+
+  focus() {
+    this.shadowRoot.querySelector('input').focus();
+  }
+
+  debug() {
+    this.shadowRoot.querySelector('input').value =
+      'Write a hello world in typescript.';
+
+    const event = new Event('submit');
+    this.shadowRoot.querySelector('form').dispatchEvent(event);
   }
 }
 

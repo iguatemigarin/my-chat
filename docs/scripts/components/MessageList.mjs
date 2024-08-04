@@ -40,7 +40,7 @@ class MessageList extends HTMLElement {
   addMessage(text, sender) {
     const messageElement = document.createElement('div');
     messageElement.classList.add('message', sender);
-    messageElement.textContent = text;
+    messageElement.innerHTML = text;
     this.shadowRoot
       .querySelector('#message-container')
       .appendChild(messageElement);
@@ -55,7 +55,7 @@ class MessageList extends HTMLElement {
   updateMessage(messageId, text, sender) {
     const messageElement = this.messageElements.get(messageId);
     if (messageElement) {
-      messageElement.textContent = text;
+      messageElement.innerHTML = text;
       messageElement.className = `message ${sender}`;
       this.scrollToBottom();
     }

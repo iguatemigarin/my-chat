@@ -53,11 +53,13 @@ class MessageInput extends HTMLElement {
       e.preventDefault();
       const message = input.value.trim();
       if (message) {
-        this.dispatchEvent(new CustomEvent('message-sent', {
-          detail: { message },
-          bubbles: true,
-          composed: true,
-        }));
+        this.dispatchEvent(
+          new CustomEvent('message-sent', {
+            detail: { message },
+            bubbles: true,
+            composed: true,
+          })
+        );
         input.value = '';
       }
     });

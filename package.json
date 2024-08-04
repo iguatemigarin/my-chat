@@ -5,15 +5,18 @@
     "start": "vite",
     "build": "vite build",
     "prepare": "husky",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix ./docs/**/*.mjs"
+    "lint": "eslint ./docs/**/*.mjs",
+    "lint:fix": "eslint --fix ./docs/**/*.mjs",
+    "format": "prettier --write ./docs"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
-    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-prettier": "^5.2.1",
     "husky": "^9.1.4",
     "lint-staged": "^15.2.8",
+    "prettier": "^3.3.3",
     "vite": "^4.0.0"
   },
   "description": "",
@@ -25,6 +28,7 @@
   "author": "",
   "license": "ISC",
   "lint-staged": {
-    "docs/**/*.{mjs,js}": "eslint"
+    "docs/**/*.{mjs,js}": "eslint --fix",
+    "docs/**/*": "prettier --write"
   }
 }

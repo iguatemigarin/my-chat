@@ -40,12 +40,15 @@ class MessageList extends HTMLElement {
     const messageElement = document.createElement('div');
     messageElement.classList.add('message', sender);
     messageElement.textContent = text;
-    this.shadowRoot.querySelector('#message-container').appendChild(messageElement);
+    this.shadowRoot
+      .querySelector('#message-container')
+      .appendChild(messageElement);
     this.scrollToBottom();
   }
 
   scrollToBottom() {
-    this.shadowRoot.querySelector('#message-container').scrollTop = this.shadowRoot.querySelector('#message-container').scrollHeight;
+    this.shadowRoot.querySelector('#message-container').scrollTop =
+      this.shadowRoot.querySelector('#message-container').scrollHeight;
   }
 }
 

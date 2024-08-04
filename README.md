@@ -1,4 +1,4 @@
-> [!INFO]
+> [!NOTE]
 > This is sandbox project. I'm evaluating how far can I get only using coding assistants. I am not allowed to manually write code.
 
 # My Chat

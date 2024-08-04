@@ -1,16 +1,16 @@
 class MessageInput extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-    }
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
 
-    connectedCallback() {
-        this.render();
-        this.setupEventListeners();
-    }
+  connectedCallback() {
+    this.render();
+    this.setupEventListeners();
+  }
 
-    render() {
-        this.shadowRoot.innerHTML = `
+  render() {
+    this.shadowRoot.innerHTML = `
             <style>
                 :host {
                     display: block;
@@ -43,25 +43,25 @@ class MessageInput extends HTMLElement {
                 <button type="submit">Send</button>
             </form>
         `;
-    }
+  }
 
-    setupEventListeners() {
-        const form = this.shadowRoot.querySelector('form');
-        const input = this.shadowRoot.querySelector('input');
+  setupEventListeners() {
+    const form = this.shadowRoot.querySelector('form');
+    const input = this.shadowRoot.querySelector('input');
 
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const message = input.value.trim();
-            if (message) {
-                this.dispatchEvent(new CustomEvent('message-sent', {
-                    detail: { message },
-                    bubbles: true,
-                    composed: true
-                }));
-                input.value = '';
-            }
-        });
-    }
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const message = input.value.trim();
+      if (message) {
+        this.dispatchEvent(new CustomEvent('message-sent', {
+          detail: { message },
+          bubbles: true,
+          composed: true,
+        }));
+        input.value = '';
+      }
+    });
+  }
 }
 
 customElements.define('message-input', MessageInput);

@@ -1,15 +1,15 @@
 class MessageList extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
-    }
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
 
-    connectedCallback() {
-        this.render();
-    }
+  connectedCallback() {
+    this.render();
+  }
 
-    render() {
-        this.shadowRoot.innerHTML = `
+  render() {
+    this.shadowRoot.innerHTML = `
             <style>
                 :host {
                     display: block;
@@ -34,19 +34,19 @@ class MessageList extends HTMLElement {
             </style>
             <div id="message-container"></div>
         `;
-    }
+  }
 
-    addMessage(text, sender) {
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('message', sender);
-        messageElement.textContent = text;
-        this.shadowRoot.querySelector('#message-container').appendChild(messageElement);
-        this.scrollToBottom();
-    }
+  addMessage(text, sender) {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message', sender);
+    messageElement.textContent = text;
+    this.shadowRoot.querySelector('#message-container').appendChild(messageElement);
+    this.scrollToBottom();
+  }
 
-    scrollToBottom() {
-        this.shadowRoot.querySelector('#message-container').scrollTop = this.shadowRoot.querySelector('#message-container').scrollHeight;
-    }
+  scrollToBottom() {
+    this.shadowRoot.querySelector('#message-container').scrollTop = this.shadowRoot.querySelector('#message-container').scrollHeight;
+  }
 }
 
 customElements.define('message-list', MessageList);

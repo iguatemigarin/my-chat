@@ -1,7 +1,7 @@
 class ChatWindow extends HTMLElement {
   constructor() {
     super();
-    this.attachShadow({ mode: "open" });
+    this.attachShadow({ mode: 'open' });
   }
 
   connectedCallback() {
@@ -29,20 +29,20 @@ class ChatWindow extends HTMLElement {
   }
 
   setupEventListeners() {
-    const messageInput = this.shadowRoot.querySelector("message-input");
-    messageInput.addEventListener("message-sent", (e) => {
-      const messageList = this.shadowRoot.querySelector("message-list");
-      messageList.addMessage(e.detail.message, "user");
+    const messageInput = this.shadowRoot.querySelector('message-input');
+    messageInput.addEventListener('message-sent', (e) => {
+      const messageList = this.shadowRoot.querySelector('message-list');
+      messageList.addMessage(e.detail.message, 'user');
       // Here you would typically send the message to the LLM and wait for a response
       // For now, we'll just simulate a response after a short delay
       setTimeout(() => {
         messageList.addMessage(
-          "This is a simulated response from the LLM.",
-          "llm"
+          'This is a simulated response from the LLM.',
+          'llm',
         );
       }, 1000);
     });
   }
 }
 
-customElements.define("chat-window", ChatWindow);
+customElements.define('chat-window', ChatWindow);

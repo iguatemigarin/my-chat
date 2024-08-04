@@ -1,3 +1,5 @@
+import { chatWithOllama } from '../ollamaChat.mjs';
+
 class ChatWindow extends HTMLElement {
   constructor() {
     super();
@@ -52,7 +54,7 @@ class ChatWindow extends HTMLElement {
     this.currentLLMMessageId = messageList.addMessage('', 'llm');
 
     try {
-      await window.chatWithOllama(userMessage);
+      await chatWithOllama(userMessage);
       // The full response will be updated through partial response events
     } catch (error) {
       console.error('Error getting response from Ollama:', error);

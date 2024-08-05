@@ -1,3 +1,5 @@
+import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js';
+
 class ContextBox extends HTMLElement {
   constructor() {
     super();
@@ -9,7 +11,7 @@ class ContextBox extends HTMLElement {
   }
 
   setContent(content) {
-    this.shadowRoot.querySelector('slot').textContent = content;
+    this.shadowRoot.querySelector('slot').innerHTML = marked(content);
   }
 
   render() {
@@ -17,12 +19,15 @@ class ContextBox extends HTMLElement {
       <style>
         :host {
           display: block;
-          background-color: #f0f0f0;
-          border: 1px solid #ddd;
-          border-radius: 5px;
           padding: 10px;
-          margin: 10px;
           font-size: 14px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          overflow-y: scroll;
+        }
+        pre {
+          white-space: break-spaces;
         }
       </style>
       <slot></slot>

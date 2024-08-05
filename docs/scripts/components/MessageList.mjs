@@ -1,3 +1,5 @@
+import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js';
+
 class MessageList extends HTMLElement {
   constructor() {
     super();
@@ -15,7 +17,7 @@ class MessageList extends HTMLElement {
         :host {
           display: block;
           height: 100%;
-          overflow-y: auto;
+          overflow-y: scroll;
           flex-grow: 1;
           padding: 20px;
         }
@@ -31,6 +33,13 @@ class MessageList extends HTMLElement {
         .llm {
           background-color: #f0f0f0;
           align-self: flex-start;
+        }
+        pre {
+          background-color: #555;
+          color: white;
+          padding: 8px 10px;
+          border-radius: 3px;
+          font-size: 14px;
         }
       </style>
       <div id="message-container"></div>
@@ -48,22 +57,15 @@ class MessageList extends HTMLElement {
     const messageId = Date.now().toString();
     this.messageElements.set(messageId, messageElement);
 
-    this.scrollToBottom();
     return messageId;
   }
 
   updateMessage(messageId, text, sender) {
     const messageElement = this.messageElements.get(messageId);
     if (messageElement) {
-      messageElement.innerHTML = text;
+      messageElement.innerHTML = marked(text);
       messageElement.className = `message ${sender}`;
-      this.scrollToBottom();
     }
-  }
-
-  scrollToBottom() {
-    this.shadowRoot.querySelector('#message-container').scrollTop =
-      this.shadowRoot.querySelector('#message-container').scrollHeight;
   }
 }
 

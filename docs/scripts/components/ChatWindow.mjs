@@ -1,4 +1,3 @@
-import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js';
 import { chatWithOllama } from '../ollamaChat.mjs';
 
 class ChatWindow extends HTMLElement {
@@ -22,18 +21,27 @@ class ChatWindow extends HTMLElement {
       <style>
         :host {
           display: flex;
+          padding: 20px;
+          gap: 20px;
+          height: calc(100% - 40px);
+        }
+        context-box {
+          flex: 1;
+        }
+        section {
+          display: flex;
           flex-direction: column;
-          width: 100%;
-          max-width: 600px;
-          height: 80vh;
+          flex: 1;
           background-color: white;
           border-radius: 10px;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
       </style>
       <context-box></context-box>
-      <message-list></message-list>
-      <message-input></message-input>
+      <section>
+        <message-list></message-list>
+        <message-input></message-input>
+      </section>
     `;
   }
 
@@ -83,14 +91,10 @@ class ChatWindow extends HTMLElement {
     if (this.currentLLMMessageId) {
       messageList.updateMessage(
         this.currentLLMMessageId,
-        this.formatResponse(partialResponse),
+        partialResponse,
         'llm'
       );
     }
-  }
-
-  formatResponse(response) {
-    return marked(response);
   }
 
   updateState(newState) {

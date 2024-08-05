@@ -41,10 +41,11 @@ export async function chatWithOllama({ prompt, context }) {
     }
 
     const newContextResponse = await generate({
-      // prompt: `<user>${prompt}</user><assistant>${fullResponse}</assistant>`,
-      prompt: 'output',
-      system:
-        'You are a helpful assistant. Your only job is to generate a context of the conversation. Generate this context based on the user input and your response. Keep the important points of the conversation.',
+      prompt: 'Generate the context of our conversation.',
+      system: `
+Your only job is to generate a context of the conversation.
+Ensure the context is up-to-date with all the messages.
+`,
       stream: false,
       context: latestLine.context,
     });
@@ -65,6 +66,7 @@ function generate({
   stream = true,
   options = {},
   context = [],
+  format,
 }) {
   return fetch(OLLAMA_API_URL, {
     method: 'POST',
@@ -78,6 +80,7 @@ function generate({
       system,
       options,
       context,
+      format,
     }),
   });
 }
